@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Cyber Blaster WebXR - Meta Quest 3</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+    body {
+      overflow: hidden;
+      background-color: #05050d;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      color: #fff;
+    }
+    #canvas-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+    /* Stylized Desktop / 2D Overlay */
+    #desktop-overlay {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      pointer-events: none;
+      z-index: 10;
+      background: rgba(10, 15, 30, 0.75);
+      border: 1px solid rgba(0, 242, 254, 0.4);
+      border-radius: 12px;
+      padding: 16px 20px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 20px rgba(0, 242, 254, 0.2);
+      max-width: 340px;
+    }
+    #desktop-overlay h1 {
+      font-size: 1.25rem;
+      color: #00f2fe;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #desktop-overlay p {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(0, 242, 254, 0.15);
+      color: #4facfe;
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .controls-hint {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 8px;
+    }
+    /* VR button override */
+    #VRButton {
+      background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%) !important;
+      color: #050510 !important;
+      font-weight: bold !important;
+      letter-spacing: 1px !important;
+      border: none !important;
+      border-radius: 30px !important;
+      padding: 14px 28px !important;
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.5) !important;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+      text-transform: uppercase !important;
+    }
+    #VRButton:hover {
+      transform: scale(1.05) !important;
+      box-shadow: 0 0 35px rgba(0, 242, 254, 0.8) !important;
+    }
+    /* Crosshair for desktop preview */
+    #crosshair {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(0, 242, 254, 0.8);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10;
+      transition: transform 0.05s ease-out;
+    }
+    #crosshair::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 4px;
+      height: 4px;
+      background: #00f2fe;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+  
+  <div id="desktop-overlay">
+    <h1><span>🎯</span> Cyber Blaster</h1>
+    <p><span class="badge">Quest 3 WebXR Ready</span></p>
+    <p>Target shooting gallery built for Meta Quest 3 Browser.</p>
+    <div class="controls-hint">
+      <strong>In Quest 3 VR:</strong> Tap <em>Enter VR</em> below. Aim with controllers, pull Trigger to fire dual blasters.<br/><br/>
+      <strong>On Desktop:</strong> Left-click to fire, drag mouse / WASD to look around.
+    </div>
+  </div>
+
+  <div id="crosshair"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
