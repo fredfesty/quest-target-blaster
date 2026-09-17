@@ -24,6 +24,7 @@
       width: 100vw;
       height: 100vh;
       display: block;
+      cursor: crosshair;
     }
     /* Stylized Desktop / 2D Overlay */
     #desktop-overlay {
@@ -32,13 +33,13 @@
       left: 20px;
       pointer-events: none;
       z-index: 10;
-      background: rgba(10, 15, 30, 0.75);
+      background: rgba(10, 15, 30, 0.85);
       border: 1px solid rgba(0, 242, 254, 0.4);
       border-radius: 12px;
       padding: 16px 20px;
       backdrop-filter: blur(8px);
       box-shadow: 0 4px 20px rgba(0, 242, 254, 0.2);
-      max-width: 340px;
+      max-width: 350px;
     }
     #desktop-overlay h1 {
       font-size: 1.25rem;
@@ -68,10 +69,42 @@
     }
     .controls-hint {
       margin-top: 10px;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       color: #94a3b8;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       padding-top: 8px;
+      line-height: 1.5;
+    }
+    .controls-hint strong {
+      color: #00f2fe;
+    }
+    .key {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-size: 0.75rem;
+      font-family: monospace;
+      color: #fff;
+    }
+    /* Pointer lock instruction banner */
+    #lock-banner {
+      position: absolute;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 15, 30, 0.8);
+      border: 1px solid #00f2fe;
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 0.85rem;
+      color: #00f2fe;
+      letter-spacing: 0.5px;
+      pointer-events: none;
+      z-index: 10;
+      transition: opacity 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
     }
     /* VR button override */
     #VRButton {
@@ -96,13 +129,13 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 14px;
-      height: 14px;
-      border: 2px solid rgba(0, 242, 254, 0.8);
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(0, 242, 254, 0.7);
       border-radius: 50%;
       pointer-events: none;
       z-index: 10;
-      transition: transform 0.05s ease-out;
+      transition: transform 0.08s ease-out, border-color 0.08s ease-out;
     }
     #crosshair::after {
       content: '';
@@ -115,6 +148,10 @@
       background: #00f2fe;
       border-radius: 50%;
     }
+    #crosshair.fire {
+      transform: translate(-50%, -50%) scale(1.5);
+      border-color: #ff0055;
+    }
   </style>
 </head>
 <body>
@@ -122,13 +159,18 @@
   
   <div id="desktop-overlay">
     <h1><span>🎯</span> Cyber Blaster</h1>
-    <p><span class="badge">Quest 3 WebXR Ready</span></p>
-    <p>Target shooting gallery built for Meta Quest 3 Browser.</p>
+    <p><span class="badge">Desktop & Quest 3 Ready</span></p>
     <div class="controls-hint">
-      <strong>In Quest 3 VR:</strong> Tap <em>Enter VR</em> below. Aim with controllers, pull Trigger to fire dual blasters.<br/><br/>
-      <strong>On Desktop:</strong> Left-click to fire, drag mouse / WASD to look around.
+      <strong>Desktop / Mouse:</strong><br/>
+      • Click screen to lock mouse & look around.<br/>
+      • <span class="key">Left Click</span>: Fire Blaster.<br/>
+      • <span class="key">W</span> <span class="key">A</span> <span class="key">S</span> <span class="key">D</span>: Move around platform.<br/>
+      • <span class="key">Esc</span>: Unlock mouse cursor.<br/><br/>
+      <strong>On Quest 3:</strong> Tap <em>Enter VR</em> to dual-wield!
     </div>
   </div>
+
+  <div id="lock-banner">🖱️ Click anywhere to lock mouse & aim</div>
 
   <div id="crosshair"></div>
 
