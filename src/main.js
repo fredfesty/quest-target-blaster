@@ -4,6 +4,7 @@ import { sounds } from './audio.js';
 import { createBlasterMesh, ProjectileManager, triggerHaptic } from './blaster.js';
 import { TargetManager, TARGET_TYPE } from './targets.js';
 import { ScoreboardHUD } from './hud.js';
+import { BackgroundManager } from './background.js';
 
 // --- Scene & Camera Setup ---
 const container = document.getElementById('canvas-container');
@@ -12,7 +13,7 @@ const lockBannerEl = document.getElementById('lock-banner');
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x060814);
-scene.fog = new THREE.FogExp2(0x060814, 0.035);
+scene.fog = new THREE.FogExp2(0x060814, 0.015);
 
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.set(0, 1.6, 0); // 1.6m eye height
@@ -95,6 +96,7 @@ for (let i = -4; i <= 4; i += 2) {
 const projectiles = new ProjectileManager(scene);
 const targets = new TargetManager(scene);
 const hud = new ScoreboardHUD(scene);
+const background = new BackgroundManager(scene);
 
 // Desktop First-Person Blaster (visible on PC)
 const desktopBlaster = createBlasterMesh(false);
@@ -446,9 +448,10 @@ renderer.setAnimationLoop(() => {
     }
   }
 
-  // 4. Update Targets & Projectiles
+  // 4. Update Targets, Projectiles & Background
   targets.update(dt, elapsed);
   projectiles.update(dt, targets, onTargetHit);
+  background.update(dt, elapsed);
 
   // 5. Render
   renderer.render(scene, camera);
