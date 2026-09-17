@@ -58,6 +58,8 @@ export class TargetManager {
     ctx.fillText('SHOOT TO START', 256, 340);
 
     const texture = new THREE.CanvasTexture(canvas);
+    texture.center.set(0.5, 0.5);
+    texture.rotation = Math.PI / 2;
     const mat = new THREE.MeshBasicMaterial({ map: texture });
 
     const disc = new THREE.Mesh(this.startGeo, mat);
@@ -232,7 +234,9 @@ export class TargetManager {
 
       // Start button idle animation
       if (u.type === TARGET_TYPE.START_BUTTON) {
-        t.rotation.z += dt * u.spinSpeed;
+        // Gentle holographic floating wobble so text is always clear and readable
+        t.rotation.z = Math.sin(elapsed * 1.5) * 0.08;
+        t.rotation.y = Math.sin(elapsed * 0.8) * 0.12;
         t.position.y = u.baseY + Math.sin(elapsed * 2) * 0.08;
         continue;
       }
